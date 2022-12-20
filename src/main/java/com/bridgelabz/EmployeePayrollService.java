@@ -1,8 +1,13 @@
 package com.bridgelabz;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import static com.bridgelabz.EmployeePayrollFileIOService.PAYROLL_FILE_NAME;
 
 public class EmployeePayrollService {
     //create an enum
@@ -45,6 +50,24 @@ public class EmployeePayrollService {
             System.out.println("\nWriting Employee Payroll Data to Console\n" + employeePayrollList);//print employeePayrollList
         else if (writeTo.equals(IOService.FILE_IO)) {
             new EmployeePayrollFileIOService().writeData(employeePayrollList);
+        }
+    }
+
+    public long countEntries() {
+        long entries = 0;
+        try {
+            entries = Files.lines(new File(PAYROLL_FILE_NAME).toPath()).count();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return entries;
+    }
+
+    public void printData(IOService employeePayrollList) {
+        try {
+            Files.lines(new File(PAYROLL_FILE_NAME).toPath()).forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

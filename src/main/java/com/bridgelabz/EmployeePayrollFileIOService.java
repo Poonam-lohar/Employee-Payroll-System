@@ -24,5 +24,23 @@ public class EmployeePayrollFileIOService {
             e.printStackTrace();
         }
     }
+
+    public long countEntries(List<EmployeePayrollData> employeePayrollList) {
+        long entries = 0;
+        try {
+            entries = Files.lines(new File(PAYROLL_FILE_NAME).toPath()).count();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return entries;
+    }
+
+    public void printData(List<EmployeePayrollData> employeePayrollList) {
+        try {
+            Files.lines(new File(PAYROLL_FILE_NAME).toPath()).forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
